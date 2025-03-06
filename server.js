@@ -2,7 +2,7 @@ const express = require("express");
 const fs = require('fs');
 const path = require("path");
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "/")));
@@ -122,6 +122,10 @@ function calc() {
     schedule = generateMonthlySchedule(config);
     count = printCountShifts(schedule,config)
 }
+
+app.get("/", (req, res) => {
+    res.redirect("/gui");
+});
 
 app.get("/schedule", (req, res) => {
     res.json(schedule);
