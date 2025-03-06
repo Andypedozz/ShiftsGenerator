@@ -2,10 +2,10 @@
     "daysRange" : [3,30],
     "riders": [
         { "name": "Miky", "requestedDaysOff": [] },
-        { "name": "Andri", "requestedDaysOff": [] },
-        { "name": "Pedo", "requestedDaysOff": [] },
+        { "name": "Richi", "requestedDaysOff": [] },
         { "name": "Giovi", "requestedDaysOff": [] },
-        { "name": "Richi", "requestedDaysOff": [] }
+        { "name": "Andri", "requestedDaysOff": [] },
+        { "name": "Pedo", "requestedDaysOff": [] }
     ],
     "weeklyNeeds": {
         "Lunedi": 2,

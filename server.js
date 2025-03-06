@@ -16,7 +16,7 @@ let count;
 let daysOfMonth;
 
 function loadConfig() {
-    const data = fs.readFileSync(path.join(__dirname,'rider-config2.json'));
+    const data = fs.readFileSync(path.join(__dirname,'rider-config.json'));
     return JSON.parse(data);
 }
 
@@ -54,7 +54,7 @@ function generateMonthlySchedule() {
     const shiftsCount = {};
 
     riders.forEach(rider => {
-        shiftsCount[rider["name"]] = 0;
+        shiftsCount[rider.name] = 0;
     });
 
     let weekIndex = 1;
@@ -65,13 +65,16 @@ function generateMonthlySchedule() {
             const daySchedule = { weekIndex, dayName, dayNumber, riders: []};
 
             // Assegnamo Miky tutti i giorni tranne il martedì in quanto giorno libero
-            if (dayName !== "Martedi") {
+            if (dayName !== "Martedi" && !riders[0].requestedDaysOff.includes(dayNumber)) {
                 daySchedule.riders.push("Miky");
                 shiftsCount["Miky"]++;
             }
 
+            // Rimuoviamo i giorni
+
             const requiredRiders = weeklyNeeds[dayName];
             const availableRiders = riders.filter(rider => {
+                if(rider.name === "Miky" && day !== "Martedi") return false;
                 if(rider.requestedDaysOff.includes(dayNumber)) return false;
                 if(workedPreviousDay(schedule, weekIndex, dayName, rider.name)) return false;
                 return true;
