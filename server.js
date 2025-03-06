@@ -58,7 +58,7 @@ function generateMonthlySchedule(config) {
             const availableRiders = riders.filter(rider => {
                 if (rider.name === "Miky" && day !== "Martedi") return false;
                 if (rider.fixedDayOff === day) return false;  // Miky ha un giorno fisso
-                if (rider.requestedDaysOff?.includes(dayNumber)) return false;  // Giorno libero specifico
+                if (rider.requestedDaysOff.includes(dayNumber)) return false;  // Giorno libero specifico
                 if (workedPreviousDay(schedule, week, day, rider.name)) return false;
                 return true;
             });
