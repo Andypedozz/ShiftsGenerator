@@ -46,6 +46,7 @@ function calc() {
     generateNumbers();
     schedule = generateMonthlySchedule();
     count = getShiftsCounts();
+    console.log(schedule);
 }
 
 function generateMonthlySchedule() {
@@ -61,8 +62,8 @@ function generateMonthlySchedule() {
     daysOfMonth.forEach(week => {
         week.forEach(day => {
             const dayName = day["name"];
+            const daySchedule = { weekIndex, dayName, riders: []};
             const dayNumber = day["number"];
-            const daySchedule = { weekIndex, dayName, dayNumber, riders: []};
 
             // Assegnamo Miky tutti i giorni tranne il martedì in quanto giorno libero
             if (dayName !== "Martedi") {
@@ -128,30 +129,12 @@ function getShiftsCounts() {
     return count;
 }
 
+function printSchedule(schedule) {
+    console.log("Calendario Turni Mensile\n");
+    schedule.forEach(day => {
+        console.log(`Settimana ${day.week} - ${day.day}: ${day.riders.join(', ')}`);
+    });
+}
+
 calc();
-
-app.get("/", (req, res) => {
-    res.redirect("/gui");
-});
-
-app.get("/schedule", (req, res) => {
-    res.json(schedule);
-});
-
-app.get("/totals", (req, res) => {
-    res.json(count);
-});
-
-app.get("/gui", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
-})
-
-app.post("/recalc", (req, res) => {
-    calc();
-    res.status(200).send({ message: "Schedule regenerated"});
-});
-
-app.listen(port, () => {
-    console.log("Server attivo sulla porta: "+port);
-})
 

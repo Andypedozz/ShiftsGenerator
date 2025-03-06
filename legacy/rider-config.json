@@ -1,7 +1,6 @@
 {
-    "daysRange" : [3,30],
     "riders": [
-        { "name": "Miky", "requestedDaysOff": [] },
+        { "name": "Miky", "fixedDayOff": "Martedi" },
         { "name": "Andri", "requestedDaysOff": [] },
         { "name": "Pedo", "requestedDaysOff": [] },
         { "name": "Giovi", "requestedDaysOff": [] },

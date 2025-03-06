@@ -43,7 +43,7 @@ function renderSchedule(schedule) {
         const div = document.createElement("div");
         div.setAttribute("class","day-div");
         const label = document.createElement("label");
-        label.innerText = day["day"]+" "+i;
+        label.innerText = day["dayName"]+" "+day["dayNumber"];
         const p = document.createElement("p");
         let text = "";
         day["riders"].forEach(rider => {
