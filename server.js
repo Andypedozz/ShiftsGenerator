@@ -8,13 +8,25 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "/")));
 app.use(express.json());
 
+const daysOfWeek = ["Lunedi", "Martedi", "Mercoledi", "Giovedi", "Venerdi", "Sabato", "Domenica"];
+let config;
+let schedule;
+let count;
+
+calc();
+
+function calc() {
+    config = loadConfig();
+    schedule = generateMonthlySchedule(config);
+    count = printCountShifts(schedule,config)
+}
+
 // Carica la configurazione
 function loadConfig() {
     const data = fs.readFileSync(path.join(__dirname,'rider-config.json'));
     return JSON.parse(data);
 }
 
-const daysOfWeek = ["Lunedi", "Martedi", "Mercoledi", "Giovedi", "Venerdi", "Sabato", "Domenica"];
 
 // Converte giorno nel mese in numero assoluto (es. 1-28)
 function getDayNumber(week, day) {
@@ -110,18 +122,6 @@ function printCountShifts(schedule, config) {
     return count;
 }
 
-// Funzione principale
-let config;
-let schedule;
-let count;
-
-calc();
-
-function calc() {
-    config = loadConfig();
-    schedule = generateMonthlySchedule(config);
-    count = printCountShifts(schedule,config)
-}
 
 app.get("/", (req, res) => {
     res.redirect("/gui");
