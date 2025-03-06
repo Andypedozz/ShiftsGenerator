@@ -1,0 +1,18 @@
+{
+    "riders": [
+        { "name": "Miky", "fixedDayOff": "Martedi" },
+        { "name": "Andri", "requestedDaysOff": [] },
+        { "name": "Pedo", "requestedDaysOff": [] },
+        { "name": "Giovi", "requestedDaysOff": [] },
+        { "name": "Richi", "requestedDaysOff": [] }
+    ],
+    "weeklyNeeds": {
+        "Lunedi": 2,
+        "Martedi": 2,
+        "Mercoledi": 2,
+        "Giovedi": 2,
+        "Venerdi": 3,
+        "Sabato": 4,
+        "Domenica": 3
+    }
+}
