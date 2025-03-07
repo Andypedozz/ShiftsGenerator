@@ -5,8 +5,22 @@
     gap: 10px;
 }
 
+#config-div {
+    display: flex;
+    flex-direction: column;
+}
+
 .day-div {
     border: 1px solid;
+}
+
+.tuesday-div {
+    border: 3px solid;
+}
+
+.tuesday-div label {
+    background: rgb(29, 29, 29);
+    color: white;
 }
 
 .day-div label {

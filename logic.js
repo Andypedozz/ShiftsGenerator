@@ -1,17 +1,6 @@
-const express = require("express");
-const fs = require('fs');
-const path = require("path");
-const app = express();
-const port = process.env.PORT || 3000;
-
-// Middleware
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "/")));
-app.use(express.json());
-
 const daysOfWeek = ["Lunedi", "Martedi", "Mercoledi", "Giovedi", "Venerdi", "Sabato", "Domenica"];
 
-let config;
+let config = {};
 let schedule;
 let count;
 let daysOfMonth;
@@ -21,8 +10,47 @@ let daysOfMonth;
 /*******************************************/
 
 function loadConfig() {
-    const data = fs.readFileSync(path.join(__dirname,'rider-config.json'));
-    return JSON.parse(data);
+    const daysRange = [];
+    const riders = [];
+    const weeklyNeeds = {};
+
+    // Collect Days Range
+    daysRange.push(document.getElementById("fStartDay").value);
+    daysRange.push(document.getElementById("fEndDay").value);
+
+    // Collect Riders
+    const riderNames = [
+        document.getElementById("fRider1").value,
+        document.getElementById("fRider2").value,
+        document.getElementById("fRider3").value,
+        document.getElementById("fRider4").value,
+        document.getElementById("fRider5").value,
+    ];
+
+    const riderDays = [
+        document.getElementById("daysOff1").value.split(","),
+        document.getElementById("daysOff2").value.split(","),
+        document.getElementById("daysOff3").value.split(","),
+        document.getElementById("daysOff4").value.split(","),
+        document.getElementById("daysOff5").value.split(","),
+    ]
+
+    for(let i = 0; i < 5; i++) {
+        riders.push({ "name" : riderNames[i], "requestedDaysOff" : riderDays[i]});
+    }
+
+    // Collect Weekly needs
+    weeklyNeeds["Lunedi"] = parseInt(document.getElementById("need1").value);
+    weeklyNeeds["Martedi"] = parseInt(document.getElementById("need2").value);
+    weeklyNeeds["Mercoledi"] = parseInt(document.getElementById("need3").value);
+    weeklyNeeds["Giovedi"] = parseInt(document.getElementById("need4").value);
+    weeklyNeeds["Venerdi"] = parseInt(document.getElementById("need5").value);
+    weeklyNeeds["Sabato"] = parseInt(document.getElementById("need6").value);
+    weeklyNeeds["Domenica"] = parseInt(document.getElementById("need7").value);
+
+    config["daysRange"] = daysRange;
+    config["riders"] = riders;
+    config["weeklyNeeds"] = weeklyNeeds;
 }
 
 function suddividiArray(array, dimensione) {
@@ -47,10 +75,13 @@ function generateNumbers() {
 }
 
 function calc() {
-    config = loadConfig();
+    loadConfig();
     generateNumbers();
     schedule = generateMonthlySchedule();
     count = getShiftsCounts();
+    clear();
+    renderSchedule(schedule);
+    renderTotals(count);
 }
 
 function generateMonthlySchedule() {
@@ -70,17 +101,15 @@ function generateMonthlySchedule() {
             const daySchedule = { weekIndex, dayName, dayNumber, riders: []};
 
             // Assegnamo Miky tutti i giorni tranne il martedì in quanto giorno libero
-            if (dayName !== "Martedi" && !riders[0].requestedDaysOff.includes(dayNumber)) {
+            if (dayName !== "Martedi" && !riders[0].requestedDaysOff.includes(dayNumber.toString())) {
                 daySchedule.riders.push("Miky");
                 shiftsCount["Miky"]++;
             }
 
-            // Rimuoviamo i giorni
-
             const requiredRiders = weeklyNeeds[dayName];
             const availableRiders = riders.filter(rider => {
                 if(rider.name === "Miky" && day !== "Martedi") return false;
-                if(rider.requestedDaysOff.includes(dayNumber)) return false;
+                if(rider.requestedDaysOff.includes(dayNumber.toString())) return false;
                 if(workedPreviousDay(schedule, weekIndex, dayName, rider.name)) return false;
                 return true;
             });
@@ -135,35 +164,3 @@ function getShiftsCounts() {
 
     return count;
 }
-
-calc();
-
-/*************************************************/
-/*                 ENDPOINTS                     */
-/*************************************************/
-
-app.get("/", (req, res) => {
-    res.redirect("/gui");
-});
-
-app.get("/schedule", (req, res) => {
-    res.json(schedule);
-});
-
-app.get("/totals", (req, res) => {
-    res.json(count);
-});
-
-app.get("/gui", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
-})
-
-app.post("/recalc", (req, res) => {
-    calc();
-    res.status(200).send({ message: "Schedule regenerated"});
-});
-
-app.listen(port, () => {
-    console.log("Server attivo sulla porta: "+port);
-})
-

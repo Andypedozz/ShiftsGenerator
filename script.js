@@ -1,14 +1,13 @@
-// SCHEDULE FETCH
 function clear() {
     const scheduleContainer = document.getElementById("schedule-container");
     const totalsContainer = document.getElementById("totals-container");
-
+    
     if(scheduleContainer.hasChildNodes) {
         while(scheduleContainer.firstChild) {
             scheduleContainer.removeChild(scheduleContainer.firstChild);
         }
     }
-
+    
     if(totalsContainer.hasChildNodes) {
         while(totalsContainer.firstChild) {
             totalsContainer.removeChild(totalsContainer.firstChild);
@@ -16,32 +15,18 @@ function clear() {
     }
 }
 
-function fetchData() {
-    clear();
-    fetchSchedule();
-    fetchTotals();
-}
-
-function fetchSchedule() {
-    fetch("/schedule", {
-        method: "GET",
-        headers: {
-            "Content-Type" : "application/json"
-        }
-    })
-    .then(response => response.json())
-    .then(schedule => {
-        renderSchedule(schedule);
-    });
-}
-
 function renderSchedule(schedule) {
     const container = document.getElementById("schedule-container");
 
     let i = 1;
+
     schedule.forEach(day => {
         const div = document.createElement("div");
-        div.setAttribute("class","day-div");
+        if(day["dayName"] == "Martedi") {
+            div.setAttribute("class","tuesday-div");
+        }else{
+            div.setAttribute("class","day-div");
+        }
         const label = document.createElement("label");
         label.innerText = day["dayName"]+" "+day["dayNumber"];
         const p = document.createElement("p");
@@ -54,19 +39,6 @@ function renderSchedule(schedule) {
         div.appendChild(p);
         container.appendChild(div);
         i++;
-    });
-}
-
-function fetchTotals() {
-    fetch("/totals", {
-        method: "GET",
-        headers: {
-            "Content-Type" : "application/json"
-        }
-    })
-    .then(response => response.json())
-    .then(totals => {
-        renderTotals(totals);
     });
 }
 
@@ -87,5 +59,3 @@ function renderTotals(totals) {
     div.appendChild(div2);
     container.appendChild(div);
 }
-
-fetchData();

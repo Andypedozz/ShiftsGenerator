@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generatore Turni</title>
+    <link rel="stylesheet" href="view.css">
+    <script src="script.js"></script>
+    <script src="logic.js"></script>
+</head>
+<body>
+    <main>
+        <h1>Generatore Turni</h1>
+        <div id="config-div">
+            <h2>Parametri</h2>
+            <label>Range giorni:</label>
+            <label>Giorno inizio: <input id="fStartDay" type="number"> Giorno fine: <input id="fEndDay" type="number"></label>
+            <label>Riders:</label>
+            <label>Rider 1<input id="fRider1" type="text" value="Miky"/> Giorni liberi: <input id="daysOff1" type="text"></label>
+            <label>Rider 1<input id="fRider2" type="text" value="Richi"/> Giorni liberi: <input id="daysOff2" type="text"></label>
+            <label>Rider 1<input id="fRider3" type="text" value="Giovi"/> Giorni liberi: <input id="daysOff3" type="text"></label>
+            <label>Rider 1<input id="fRider4" type="text" value="Andri"/> Giorni liberi: <input id="daysOff4" type="text"></label>
+            <label>Rider 1<input id="fRider5" type="text" value="Pedo"/> Giorni liberi: <input id="daysOff5" type="text"></label>
+            <label>Numeri rider per giorno della settimana: </label>
+            <label>Lunedi <input id="need1" type="number" value="2"></label>
+            <label>Martedi <input id="need2" type="number" value="2"></label>
+            <label>Mercoledi <input id="need3" type="number" value="2"></label>
+            <label>Giovedi <input id="need4" type="number" value="2"></label>
+            <label>Venerdi <input id="need5" type="number" value="3"></label>
+            <label>Sabato <input id="need6" type="number" value="4"></label>
+            <label>Domenica <input id="need7" type="number" value="3"></label>
+        </div>
+        <button onclick="calc()">Genera</button>
+        <div id="schedule-container">
+
+        </div>
+        <div id="totals-container">
+        </div>
+    </main>
+</body>
+</html>
