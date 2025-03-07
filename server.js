@@ -4,6 +4,7 @@ const path = require("path");
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "/")));
 app.use(express.json());
@@ -14,6 +15,10 @@ let config;
 let schedule;
 let count;
 let daysOfMonth;
+
+/*******************************************/
+/*                FUNCTIONS                */
+/*******************************************/
 
 function loadConfig() {
     const data = fs.readFileSync(path.join(__dirname,'rider-config.json'));
@@ -132,6 +137,10 @@ function getShiftsCounts() {
 }
 
 calc();
+
+/*************************************************/
+/*                 ENDPOINTS                     */
+/*************************************************/
 
 app.get("/", (req, res) => {
     res.redirect("/gui");
