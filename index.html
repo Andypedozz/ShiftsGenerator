@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generatore Turni</title>
-    <link rel="stylesheet" href="view.css">
-    <script src="script.js"></script>
-    <script src="logic.js"></script>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <main>
@@ -14,7 +12,7 @@
         <div id="config-div">
             <h2>Parametri</h2>
             <label>Range giorni:</label>
-            <label>Giorno inizio: <input id="fStartDay" type="number"> Giorno fine: <input id="fEndDay" type="number"></label>
+            <label>Giorno inizio: <input id="fStartDay" type="number" value="3"> Giorno fine: <input id="fEndDay" type="number" value="30"></label>
             <label>Riders:</label>
             <label>Rider 1<input id="fRider1" type="text" value="Miky"/> Giorni liberi: <input id="daysOff1" type="text"></label>
             <label>Rider 1<input id="fRider2" type="text" value="Richi"/> Giorni liberi: <input id="daysOff2" type="text"></label>
@@ -30,12 +28,12 @@
             <label>Sabato <input id="need6" type="number" value="4"></label>
             <label>Domenica <input id="need7" type="number" value="3"></label>
         </div>
-        <button onclick="calc()">Genera</button>
         <div id="schedule-container">
-
         </div>
         <div id="totals-container">
         </div>
+        <button onclick="sendData()">Rigenera</button>
     </main>
+    <script src="script.js"></script>
 </body>
 </html>
