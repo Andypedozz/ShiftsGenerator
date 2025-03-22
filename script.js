@@ -56,12 +56,14 @@ function sendData() {
     .then(res => {
         alert(res.message);
         fetchData(res);
+        addCsvLink();
     })
 }
 
 function clear() {
     const scheduleContainer = document.getElementById("schedule-container");
     const totalsContainer = document.getElementById("totals-container");
+    const csvDownloadContainer = document.getElementById("csv-download-container");
 
     if(scheduleContainer.hasChildNodes) {
         while(scheduleContainer.firstChild) {
@@ -72,6 +74,12 @@ function clear() {
     if(totalsContainer.hasChildNodes) {
         while(totalsContainer.firstChild) {
             totalsContainer.removeChild(totalsContainer.firstChild);
+        }
+    }
+
+    if(csvDownloadContainer.hasChildNodes) {
+        while(csvDownloadContainer.firstChild) {
+            csvDownloadContainer.removeChild(csvDownloadContainer.firstChild);
         }
     }
 }
@@ -124,5 +132,15 @@ function renderTotals(totals) {
     div.appendChild(h2);
     div.appendChild(div2);
     container.appendChild(div);
+}
+
+function addCsvLink() {
+    const container = document.getElementById("csv-download-container");
+
+    const a = document.createElement("a");
+    a.href = "csvExport.csv";
+    a.download = "csvExport.csv";
+    a.innerText = "Scarica CSV";
+    container.appendChild(a);
 }
 

@@ -122,6 +122,25 @@ button:hover {
     background: #2980b9;
 }
 
+#csv-download-container {
+    margin: 1%;
+}
+#csv-download-container a {
+    text-decoration: none;
+    color: white;
+    background: #3498db;
+    margin: 20px auto;
+    padding: 10px;
+    margin: 20px auto;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+#csv-download-container a:hover {
+    background: #2980b9;
+}
+
 /* Responsività */
 @media (max-width: 768px) {
     #schedule-container {
