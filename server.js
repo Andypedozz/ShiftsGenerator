@@ -52,14 +52,14 @@ function generateMonthlySchedule(config) {
         week.forEach(day => {
             const dayName = day["name"];
             const dayNumber = day["number"];
-            const daySchedule = { weekIndex, dayName, dayName, dayNumber, riders: []};
+            const daySchedule = { weekIndex, dayName, dayName, dayNumber, riders: [], "ridersCount" : 0};
 
             // Assegnamo Miky tutti i giorni tranne il martedì in quanto giorno libero
             if(dayName != "Martedi" && !riders[0].requestedDaysOff.includes(dayNumber.toString())) {
-                daySchedule.riders.push("");
-                shiftsCount[""]++;
+                daySchedule.ridersCount = daySchedule.ridersCount + 1;
+                shiftsCount["Miky"]++;
             }
-
+            
             const requiredRiders = weeklyNeeds[dayName];
             const availableRiders = riders.filter(rider => {
                 if(rider.name == "Miky" && day != "Martedi") return false;
@@ -67,12 +67,13 @@ function generateMonthlySchedule(config) {
                 if(workedPreviousDay(schedule, weekIndex, dayName, rider.name)) return false;
                 return true;
             });
-
+            
             availableRiders.sort((a, b) => shiftsCount[a.name] - shiftsCount[b.name]);
-
-            while (daySchedule.riders.length < requiredRiders && availableRiders.length > 0) {
+            
+            while (daySchedule.ridersCount < requiredRiders && availableRiders.length > 0) {
                 const rider = availableRiders.shift();
                 daySchedule.riders.push(rider.name);
+                daySchedule.ridersCount = daySchedule.ridersCount + 1;
                 shiftsCount[rider.name]++;
             }
 
