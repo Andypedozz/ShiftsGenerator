@@ -54,7 +54,6 @@ function sendData() {
     })
     .then(response => response.json())
     .then(res => {
-        alert(res.message);
         fetchData(res);
         addCsvLink();
     })
