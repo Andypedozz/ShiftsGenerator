@@ -28,8 +28,8 @@ function generateDays(config) {
     const daysRange = config["daysRange"];
     const startDay = daysRange[0];
     const endDay = daysRange[1];
-    for(let i = startDay, j = 0; i <= endDay; i++, j = (j + 1) % 7) {
-        month.push({ "number": i, "name" : daysOfWeek[j]});
+    for(let i = parseInt(startDay), j = 0; i <= parseInt(endDay); i++, j = (j + 1) % 7) {
+        month.push({ "number": i.toString(), "name" : daysOfWeek[j]});
     }
     
     month = suddividiArray(month, 7);
