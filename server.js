@@ -26,9 +26,9 @@ function suddividiArray(array, dimensione) {
 function generateDays(config) {
     let month = [];
     const daysRange = config["daysRange"];
-    const startDay = daysRange[0];
-    const endDay = daysRange[1];
-    for(let i = parseInt(startDay), j = 0; i <= parseInt(endDay); i++, j = (j + 1) % 7) {
+    const startDay = parseInt(daysRange[0]);
+    const endDay = parseInt(daysRange[1]);
+    for(let i = startDay, j = 0; i <= endDay; i++, j = (j + 1) % 7) {
         month.push({ "number": i.toString(), "name" : daysOfWeek[j]});
     }
     
